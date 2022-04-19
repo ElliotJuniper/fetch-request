@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react'
 import './App.css';
 
 function App() {
+  const [characters, setCharacters] = useState([]);
+  const [error, setError] = useState(null)
+
+
+  useEffect(() => {
+  const fetchCharacters = async () => {
+    try {
+   
+    const response = await fetch('https://www.breakingbadapi.com/api/characters')
+    if (!respone.ok){
+      throw new Error(response.statusText)
+    }
+    const data = await response.json();
+    setCharacters(data);
+  };
+    fetchCharacters();
+
+    } catch (err) {
+      console.log(err.message)
+      setError("Could not fetch error")
+     }
+  }, []);
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {characters.map( (character) => (
+        <>
+        {error && <p>{error}</p>}
+        <div>{character.name}</div>
+        <img src={character.img} alt="breaking bad"/>
+        </>
+      ))}
     </div>
   );
 }
