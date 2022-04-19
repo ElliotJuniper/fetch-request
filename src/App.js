@@ -16,13 +16,12 @@ function App() {
     }
     const data = await response.json();
     setCharacters(data);
-  };
-    fetchCharacters();
-
-    } catch (err) {
-      console.log(err.message)
-      setError("Could not fetch error")
-     }
+  
+} catch (err) {
+  console.log(err.message)
+  setError("Could not fetch error")
+}}
+fetchCharacters();
   }, []);
 
 
